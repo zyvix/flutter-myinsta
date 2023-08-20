@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyUploadPage extends StatefulWidget {
-  const MyUploadPage({super.key});
+  final PageController? pageController;
+  const MyUploadPage({super.key, this.pageController});
 
   @override
   State<MyUploadPage> createState() => _MyUploadPageState();
@@ -23,16 +24,58 @@ class _MyUploadPageState extends State<MyUploadPage> {
     });
   }
 
-  takePhoto() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
+  _imgFromCamera() async{
+    XFile? image = await _picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    setState(() {
+      _image = File(image!.path);
+    });
   }
+
+  _uploadNewPost(){
+    String caption = captionController.text.toString().trim();
+    if(caption.isEmpty) return;
+    if (_image == null) return;
+    _moveToFeed();
+  }
+
+  _moveToFeed(){
+    setState(() {
+      isLoading = false;
+    });
+    captionController.text = "";
+    _image = null;
+    widget.pageController!.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+  }
+
+  void _showPicker(context){
+    showModalBottomSheet(context: context, builder: (BuildContext context){
+      return SafeArea(
+        child: Container(
+          child: Wrap(
+            children: [
+              new ListTile(
+                leading: new Icon(Icons.photo_library),
+                title: Text("Pick a photo"),
+                onTap: (){
+                  _imgFromGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.photo_camera),
+                title: Text("Take a photo"),
+                onTap: (){
+                  _imgFromCamera();
+                  Navigator.of(context).pop();
+                },
+              )
+            ]
+          ),
+        ),
+      );
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +90,12 @@ class _MyUploadPageState extends State<MyUploadPage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _uploadNewPost();
+              },
               icon: Icon(
                 Icons.drive_folder_upload,
-                color: Color.fromRGBO(245, 96, 64, 1),
+                color: Color.fromRGBO(193, 53, 132, 1),
               ),
             ),
           ],
@@ -63,35 +108,8 @@ class _MyUploadPageState extends State<MyUploadPage> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading: Icon(Icons.photo_library_outlined),
-                                    title: Text("Pick photo"),
-                                    onTap: () {
-                                      _imgFromGallery();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: Icon(Icons.add_a_photo),
-                                    title: Text("Take a photo"),
-                                    onTap: () {
-                                      takePhoto();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
+                      onTap: () {
+                        _showPicker(context);
                       },
                       child: Container(
                         width: double.infinity,

@@ -30,9 +30,9 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         children: [
-          MyFeedPage(),
+          MyFeedPage(pageController: _pageController,),
           MySearchPage(),
-          MyUploadPage(),
+          MyUploadPage(pageController: _pageController),
           MyLikesPage(),
           MyProfilePage()
         ],
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           });
           },
         currentIndex: _currentTap,
-        activeColor: Color.fromRGBO(245, 96, 64, 1),
+        activeColor: Color.fromRGBO(193, 53, 132, 1),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 32,)

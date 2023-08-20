@@ -38,8 +38,8 @@ class _SignInPageState extends State<SignInPage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromRGBO(252, 175, 69, 1),
-                  Color.fromRGBO(245, 96, 64, 1),
+                  Color.fromRGBO(193, 53, 132, 1),
+                  Color.fromRGBO(131, 58, 180, 1),
                 ]
             )
         ),
