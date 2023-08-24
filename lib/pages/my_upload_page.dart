@@ -95,7 +95,7 @@ class _MyUploadPageState extends State<MyUploadPage> {
               },
               icon: Icon(
                 Icons.drive_folder_upload,
-                color: Color.fromRGBO(193, 53, 132, 1),
+                color: Color.fromRGBO(245, 96, 64, 1),
               ),
             ),
           ],

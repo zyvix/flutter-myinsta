@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           });
           },
         currentIndex: _currentTap,
-        activeColor: Color.fromRGBO(193, 53, 132, 1),
+        activeColor: Color.fromRGBO(245, 96, 64, 1),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 32,)

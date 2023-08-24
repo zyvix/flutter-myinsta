@@ -24,7 +24,6 @@ class _MyFeedPageState extends State<MyFeedPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     items.add(Post(image_1, "Best photo I have ever seen"));
     items.add(Post(image_2, "Best photo I have ever seen"));
@@ -44,7 +43,7 @@ class _MyFeedPageState extends State<MyFeedPage> {
             onPressed: (){
               widget.pageController!.animateToPage(2, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
             },
-            color: Color.fromRGBO(193, 53, 132, 1),
+            color: Color.fromRGBO(245, 96, 64, 1),
             icon: Icon(Icons.camera_alt),
           ),
         ],
